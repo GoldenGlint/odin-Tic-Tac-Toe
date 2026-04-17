@@ -46,4 +46,6 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
             activePlayer=Player[0];
         }
     }
+
+    const getActivePlayer=() => activePlayer;
 }
