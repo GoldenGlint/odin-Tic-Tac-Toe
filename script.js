@@ -22,8 +22,7 @@ function createPlayer(name, id){
     return { getPositions, addPositions, getPlayerID, getPlayerName, checkWin};
 }
 
-function createBoard(name, id, pos, activePlayer){
-    const { getPositions, addPositions, getPlayerID, getPlayerName, checkWin} = createPlayer(name , id);
+function createBoard(){
     let board=["-", "-", "-", "-", "-", "-", "-", "-", "-"];
     const getBoard = () => board;
     const printBoard= () => console.log(board);
@@ -40,8 +39,9 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
         createPlayer(playerTwoName, 1),
 
     ];
+    let board=createBoard();
 
-    let activePlayer=player[0];
+    let activePlayer=players[0];
     
     const switchPlayer = (id) => {
         if(activePlayer===players[0]){
@@ -61,11 +61,11 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 
         if(remaining.includes(pos)){
             if(activePlayer.getPlayerID()==0){
-                markSquare(pos, "X");
+                board.markSquare(pos, "X");
 
             }
             else{
-                markSquare(pos, "O");
+               board.markSquare(pos, "O");
                 
             }
             activePlayer.addPositions(pos);
@@ -77,10 +77,11 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 
     }
 
-    const playRound = (pos, activePlayer) => {
-        if(drop(pos, activePlayer)==true){
+    const playRound = (pos) => {
+        if(drop(pos, activePlayer)===true){
             switchPlayer(activePlayer.getPlayerID());
             activePlayer.checkWin();
+            board.printBoard();
         }
     }
     return { switchPlayer, getActivePlayer, playRound};
