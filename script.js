@@ -13,7 +13,7 @@ function createPlayer(name, id){
         const winningCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
         const posSet = new Set(positions);
         if(winningCombos.some(combo => combo.every(i => posSet.has(i)))){
-            console.log(console.log(`${activePlayer.getPlayerName()} won!`));
+            console.log(`${name} won!`);
             return true;
         }
         return false;
@@ -79,9 +79,10 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 
     const playRound = (pos) => {
         if(drop(pos, activePlayer)===true){
-            switchPlayer(activePlayer.getPlayerID());
+            
             activePlayer.checkWin();
             board.printBoard();
+            switchPlayer(activePlayer.getPlayerID());
         }
     }
     return { switchPlayer, getActivePlayer, playRound};
