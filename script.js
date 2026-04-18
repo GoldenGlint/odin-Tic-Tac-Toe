@@ -7,9 +7,19 @@ function createPlayer(name, id){
     }
 
     const getPlayerID = () => id;
+    const getPlayerName = () => name;
+
+    const checkWin = () => {
+        const winningCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        const posSet = new Set(positions);
+        return winningCombos.some(combo => combo.every(i => posSet.has(i)));
+    };
+
+    return { getPositions, addPositions, getPlayerID, getPlayerName, checkWin};
 }
 
-function createBoard(){
+function createBoard(name, id, pos, activePlayer){
+    const { getPositions, addPositions, getPlayerID, getPlayerName, checkWin} = createPlayer(name , id);
     let board=["-", "-", "-", "-", "-", "-", "-", "-", "-"];
     winningCombo=[[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8]];
     let curPlayer=0;
@@ -28,7 +38,7 @@ function createBoard(){
                 board[pos]="O";
                 
             }
-            activePlayer.addPosition(pos);
+            activePlayer.addPositions(pos);
             return true;
         }
         else{
@@ -36,6 +46,8 @@ function createBoard(){
         }
 
     }
+
+    return { getPositions, addPositions, getPlayerID, getPlayerName, checkWin, drop};
 
 }
 
@@ -46,16 +58,23 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 
     ];
 
-    const activePlayer=player[0];
+    let activePlayer=player[0];
     
-    const switchPlayer = (token) => {
-        if(activePlayer=player[0]){
-            activePlayer=player[1];
+    const switchPlayer = (id) => {
+        if(activePlayer===players[0]){
+            activePlayer=players[1];
         }
         else{
-            activePlayer=Player[0];
+            activePlayer=players[0];
         }
     }
-
     const getActivePlayer=() => activePlayer;
+
+    const playRound = (pos, activePlayer) => {
+        if(drop(pos, activePlayer)==true){
+            switchPlayer(activePlayer.getPlayerID());
+            
+        }
+    }
+    return { switchPlayer, getActivePlayer, playRound};
 }
