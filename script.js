@@ -5,6 +5,8 @@ function createPlayer(name, id){
     const addPositions = (pos) => {
         positions.push(pos);
     }
+
+    const getPlayerID = () => id;
 }
 
 function createBoard(){
@@ -12,11 +14,26 @@ function createBoard(){
     winningCombo=[[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8]];
     let curPlayer=0;
 
-    let p1=createPlayer("Bob", 0);
-    let p2=createPlayer("Jeff", 1);
+    const drop = (pos, activePlayer) =>{
+        let available=[0,1,2,3,4,5,6,7,8];
+        const combined=players[0].getPositions().concat(players[1].getPositions());
+        let remaining=available.filter(x => !combined.includes(x));
 
-    const drop = (pos) =>{
+        if(remaining.includes(pos)){
+            if(activePlayer.getPlayerID()==0){
+                board[pos]="X";
 
+            }
+            else{
+                board[pos]="O";
+                
+            }
+            activePlayer.addPosition(pos);
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
 
@@ -24,15 +41,8 @@ function createBoard(){
 
 function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
     const players = [
-        {
-            name: playerOneName,
-            token: 0,
-            
-        },
-        {
-            name: playerTwoName,
-            token: 1,
-        },
+        createPlayer(playerOneName, 0),
+        createPlayer(playerTwoName, 1),
 
     ];
 
