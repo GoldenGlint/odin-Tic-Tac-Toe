@@ -25,7 +25,15 @@ function createPlayer(name, id){
 function createBoard(){
     let board=["-", "-", "-", "-", "-", "-", "-", "-", "-"];
     const getBoard = () => board;
-    const printBoard= () => console.log(board);
+    const printBoard = () => {
+  console.log(`
+${board[0]} | ${board[1]} | ${board[2]}
+---------
+${board[3]} | ${board[4]} | ${board[5]}
+---------
+${board[6]} | ${board[7]} | ${board[8]}
+  `);
+};
     const markSquare = (pos, symbol) => { board[pos] = symbol; };
     
 
@@ -79,18 +87,59 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 
     const playRound = (pos) => {
         if(drop(pos, activePlayer)===true){
+            board.printBoard();
             
             activePlayer.checkWin();
-            board.printBoard();
+            
             switchPlayer(activePlayer.getPlayerID());
         }
     }
     return { switchPlayer, getActivePlayer, playRound};
 }
 
-const game = gameController();
-game.playRound(0);
-game.playRound(3);
-game.playRound(1);
-game.playRound(4);
-game.playRound(2); 
+const game1 = gameController("Alice", "Bob");
+// Player One wins top row [0,1,2]
+game1.playRound(0); // Alice: X
+game1.playRound(3); // Bob: O
+game1.playRound(1); // Alice: X
+game1.playRound(4); // Bob: O
+game1.playRound(2); // Alice wins!
+
+const game2 = gameController("Alice", "Bob");
+// Player Two wins middle row [3,4,5]
+game2.playRound(0); // Alice: X
+game2.playRound(3); // Bob: O
+game2.playRound(1); // Alice: X
+game2.playRound(4); // Bob: O
+game2.playRound(8); // Alice: X
+game2.playRound(5); // Bob wins!
+
+const game3 = gameController("Alice", "Bob");
+// Player One wins left column [0,3,6]
+game3.playRound(0); // Alice: X
+game3.playRound(1); // Bob: O
+game3.playRound(3); // Alice: X
+game3.playRound(2); // Bob: O
+game3.playRound(6); // Alice wins!
+
+const game4 = gameController("Alice", "Bob");
+// Player One wins diagonal [0,4,8]
+game4.playRound(0); // Alice: X
+game4.playRound(1); // Bob: O
+game4.playRound(4); // Alice: X
+game4.playRound(2); // Bob: O
+game4.playRound(8); // Alice wins!
+
+const game5 = gameController("Alice", "Bob");
+// Player One wins anti-diagonal [2,4,6]
+game5.playRound(2); // Alice: X
+game5.playRound(0); // Bob: O
+game5.playRound(4); // Alice: X
+game5.playRound(1); // Bob: O
+game5.playRound(6); // Alice wins!
+
+const game6 = gameController("Alice", "Bob");
+// Invalid move test — playing on occupied square
+game6.playRound(0); // Alice: X
+game6.playRound(0); // Bob: invalid, should be ignored
+game6.playRound(1); // Alice: X (still Alice's turn)
