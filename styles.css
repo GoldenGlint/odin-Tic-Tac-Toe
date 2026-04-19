@@ -1,0 +1,31 @@
+:root{
+    --background-color: #1a1a2e;
+    --cell-background: #2a1f3d;
+    --x-color: #c084fc;
+    --o-color: #67e8c4;
+    --text-color: #e2c4f0; 
+    --cell-button: #7c3aed; 
+
+}
+
+.container{
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    place-items: center;
+    gap: 1vh;
+}
+
+.board{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+    width: 100%;
+    gap: 10px;
+}
+
+.digit-button{
+    height: 100%;
+    width: 100%;
+}
+
