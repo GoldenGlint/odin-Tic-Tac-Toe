@@ -19,6 +19,8 @@ function createPlayer(name, id){
         return false;
     };
 
+
+
     const resetPlayer = () => {
         positions=[];
     }
@@ -117,6 +119,9 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 
                 
             };
+            if(checkDraw()){
+                return "draw";
+            }
             
             switchPlayer(activePlayer.getPlayerID());
             return true;
@@ -125,7 +130,13 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
             return false;
         }
     }
-    return { switchPlayer, getActivePlayer, playRound, resetGame};
+
+    const checkDraw = () => {
+        const combined = players[0].getPositions().concat(players[1].getPositions());
+        return combined.length === 9;
+    };
+
+    return { switchPlayer, getActivePlayer, playRound, resetGame, checkDraw};
 }
 
 function screenController(){
@@ -168,6 +179,10 @@ function screenController(){
                 const result = game.playRound(index);
                 if(result=="win"){
                     winnersMessage.textContent=`${game.getActivePlayer().getPlayerName()} wins!`;
+                    dialog.showModal();
+                }
+                else if(result === "draw"){
+                    winnersMessage.textContent = "It's a draw!";
                     dialog.showModal();
                 }
 
