@@ -8,24 +8,43 @@
 
 }
 
+body{
+    background-color: var(--background-color);
+}
+
+.title{
+    color: var(--text-color);
+}
+
 .container{
     display: grid;
     grid-template-rows: 1fr 4fr;
     place-items: center;
-    gap: 1vh;
+    gap: 0.5vh;
 }
 
 .board{
+  
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
-    height: 100%;
-    width: 100%;
+    height: min(70vh, 70vw);
+    width: min(70vw, 70vh);
     gap: 10px;
+    
 }
 
 .digit-button{
     height: 100%;
     width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--cell-background);
+    border-radius: 5px;
+    color: var(--cell-button);
+}
+
+.digit-button:hover{
+    background-color: #3a2a50; 
+    cursor: pointer;
 }
 
