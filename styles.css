@@ -72,12 +72,12 @@ body{
     cursor: pointer;
 }
 
-.x{
+.X{
     color: var(--x-color);
     font-size: 3rem;
 }
 
-.o{
+.O{
     color: var(--o-color);
     font-size: 3rem;
 }
