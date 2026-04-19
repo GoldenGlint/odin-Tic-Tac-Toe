@@ -129,16 +129,36 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 }
 
 function screenController(){
-    const game=gameController();
+    let game;
+    const startScreen=document.querySelector("#initial-screen");
+    const startButton=document.querySelector("#start-game");
+
+    startScreen.showModal();
+
+    startButton.addEventListener("click", () => {
+        const playerOneName = document.querySelector("#player-one-name").value || "PlayerOne";
+        const playerTwoName = document.querySelector("#player-two-name").value || "PlayerTwo";
+        startScreen.close();
+        startGame(playerOneName, playerTwoName);
+    })
+    const startGame = (playerOneName, playerTwoName) => {
+        game = gameController(playerOneName, playerTwoName);
+        updateScreen();
+
+
+    };
+
+    
     const turn=document.querySelector(".turn");
 
     const dialog = document.querySelector("#winning-screen");
     const restartButton = document.querySelector("#restart");
-    const winnersMessage=document.querySelector(".winners-message")
+    const winnersMessage=document.querySelector(".winners-message");
 
     restartButton.addEventListener("click", ()=>{
         game.resetGame();
         dialog.close();
+        updateScreen();
     })
 
     const digitButtons = document.querySelectorAll(".digit-button");
@@ -162,8 +182,7 @@ function screenController(){
         
     }
 
-    updateScreen();
-
+    
 }
 
 screenController();
