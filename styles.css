@@ -81,3 +81,41 @@ body{
     color: var(--o-color);
     font-size: 3rem;
 }
+
+#winning-screen {
+  background: #2a1f3d;
+  border: 1px solid #4a2f6a;
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#winning-screen::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.winners-message {
+  color: #e2c4f0;
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0 0 1.5rem;
+}
+
+#restart {
+  background: #7c3aed;
+  color: #ede9fe;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+
+#restart:hover {
+  background: #6d28d9;
+}
