@@ -80,6 +80,7 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
         players[1].resetPlayer();
         board.resetBoard();
         activePlayer=players[0];
+        board.renderBoard();
 
     }
 
@@ -136,8 +137,8 @@ function screenController(){
     const winnersMessage=document.querySelector(".winners-message")
 
     restartButton.addEventListener("click", ()=>{
-                    resetGame();
-                    dialog.close();
+        game.resetGame();
+        dialog.close();
     })
 
     const digitButtons = document.querySelectorAll(".digit-button");
