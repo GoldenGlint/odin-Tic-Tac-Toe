@@ -19,16 +19,25 @@ function createPlayer(name, id){
         return false;
     };
 
-    return { getPositions, addPositions, getPlayerID, getPlayerName, checkWin};
+    const resetPlayer = () => {
+        positions=[];
+    }
+
+    return { getPositions, addPositions, getPlayerID, getPlayerName, checkWin, resetPlayer};
 }
 
 function createBoard(){
     let board=["", "", "", "", "", "", "", "", ""];
     const getBoard = () => board;
 
+    const resetBoard= ()=> {
+        board=["", "", "", "", "", "", "", "", ""];
+    }
+
     const renderBoard = () => {
         const cells=document.querySelectorAll(".digit-button");
         cells.forEach((cell, index) =>{
+            cell.classList.remove("X", "O"); 
             cell.textContent=board[index];
             if(board[index]=="X"){
                 cell.classList.add("X");
@@ -42,7 +51,7 @@ function createBoard(){
     const markSquare = (pos, symbol) => { board[pos] = symbol; };
     
 
-    return { getBoard, renderBoard, markSquare};
+    return { getBoard, renderBoard, markSquare, resetBoard};
 
 }
 
@@ -66,6 +75,13 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
     }
     const getActivePlayer=() => activePlayer;
 
+    const resetGame= () => {
+        players[0].resetPlayer();
+        players[1].resetPlayer();
+        board.resetBoard();
+        activePlayer=players[0];
+
+    }
 
     const drop = (pos, activePlayer) =>{
         let available=[0,1,2,3,4,5,6,7,8];
@@ -93,8 +109,18 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
     const playRound = (pos) => {
         if(drop(pos, activePlayer)===true){
             board.renderBoard();
-            
-            activePlayer.checkWin();
+            const dialog = document.querySelector("#winning-screen");
+            const restartButton = document.querySelector("#restart");
+            const winnersMessage=document.querySelector(".winners-message")
+            if(activePlayer.checkWin()){
+
+                dialog.showModal();
+
+                restartButton.addEventListener("click", ()=>{
+                    resetGame();
+                    dialog.close();
+                })
+            };
             
             switchPlayer(activePlayer.getPlayerID());
             return true;
@@ -103,7 +129,7 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
             return false;
         }
     }
-    return { switchPlayer, getActivePlayer, playRound};
+    return { switchPlayer, getActivePlayer, playRound, resetGame};
 }
 
 function screenController(){
@@ -121,7 +147,7 @@ function screenController(){
 
     const updateScreen=()=>{
         const activePlayer=game.getActivePlayer();
-        turn.textContent=`${activePlayer.name}'s turn`;
+        turn.textContent=`${activePlayer.getPlayerName()}'s turn`;
         
         
     }
