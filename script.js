@@ -109,17 +109,12 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
     const playRound = (pos) => {
         if(drop(pos, activePlayer)===true){
             board.renderBoard();
-            const dialog = document.querySelector("#winning-screen");
-            const restartButton = document.querySelector("#restart");
-            const winnersMessage=document.querySelector(".winners-message")
+            
             if(activePlayer.checkWin()){
 
-                dialog.showModal();
+                return "win";
 
-                restartButton.addEventListener("click", ()=>{
-                    resetGame();
-                    dialog.close();
-                })
+                
             };
             
             switchPlayer(activePlayer.getPlayerID());
@@ -135,12 +130,26 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
 function screenController(){
     const game=gameController();
     const turn=document.querySelector(".turn");
-    
+
+    const dialog = document.querySelector("#winning-screen");
+    const restartButton = document.querySelector("#restart");
+    const winnersMessage=document.querySelector(".winners-message")
+
+    restartButton.addEventListener("click", ()=>{
+                    resetGame();
+                    dialog.close();
+    })
+
     const digitButtons = document.querySelectorAll(".digit-button");
         digitButtons.forEach((button, index)=>{
             button.addEventListener("click", (e)=>{
                 console.log(index);
-                game.playRound(index);
+                const result = game.playRound(index);
+                if(result=="win"){
+                    winnersMessage.textContent=`${game.getActivePlayer().getPlayerName()} wins!`;
+                    dialog.showModal();
+                }
+
                 updateScreen();
             })
         })
