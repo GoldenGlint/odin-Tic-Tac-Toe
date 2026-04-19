@@ -119,3 +119,60 @@ body{
 #restart:hover {
   background: #6d28d9;
 }
+
+#initial-screen {
+  background: #2a1f3d;
+  border: 1px solid #4a2f6a;
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#initial-screen::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#initial-screen h1 {
+  color: #e2c4f0;
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 0 1.5rem;
+}
+
+#initial-screen input {
+  background: #1a1a2e;
+  border: 1px solid #4a2f6a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #e2c4f0;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  margin-bottom: 12px;
+}
+
+#initial-screen input::placeholder {
+  color: #9b72b0;
+}
+
+#start-game {
+  background: #7c3aed;
+  color: #ede9fe;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+}
+
+#start-game:hover {
+  background: #6d28d9;
+}
