@@ -33,7 +33,7 @@ function createBoard(){
             if(board[index]=="X"){
                 cell.classList.add("X");
             }
-            else{
+            else if(board[index]=="O"){
                 cell.classList.add("O");
             }
 
@@ -97,13 +97,42 @@ function gameController(playerOneName="PlayerOne", playerTwoName="PlayerTwo"){
             activePlayer.checkWin();
             
             switchPlayer(activePlayer.getPlayerID());
+            return true;
+        }
+        else{
+            return false;
         }
     }
     return { switchPlayer, getActivePlayer, playRound};
 }
 
-const game=gameController("Player1", "Player2");
-game.playRound(7);
+function screenController(){
+    const game=gameController();
+    const turn=document.querySelector(".turn");
+    
+    const digitButtons = document.querySelectorAll(".digit-button");
+        digitButtons.forEach((button, index)=>{
+            button.addEventListener("click", (e)=>{
+                console.log(index);
+                game.playRound(index);
+                updateScreen();
+            })
+        })
+
+    const updateScreen=()=>{
+        const activePlayer=game.getActivePlayer();
+        turn.textContent=`${activePlayer.name}'s turn`;
+        
+        
+    }
+
+    updateScreen();
+
+}
+
+screenController();
+
+
 
 //////////////////////////////////////////////////// listeners
 
